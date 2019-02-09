@@ -1,0 +1,49 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <DataTemplate x:Key="TaskStyle">
+        <Grid Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext}">
+            <Grid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Remove task"
+                              Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.Tag.RemoveTaskCommand}"
+                              CommandParameter="{Binding}"/>
+                </ContextMenu>
+            </Grid.ContextMenu>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <CheckBox IsChecked="{Binding IsCompleted}"/>
+
+            <Separator VerticalAlignment="Center" 
+                       Grid.Column="1"
+                       Visibility="{Binding IsCompleted, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+            <TextBlock Text="{Binding Text}" 
+                       Grid.Column="1"
+                       VerticalAlignment="Center"/>
+
+            <TextBlock Text="{Binding DateAdded, StringFormat='Date added: {0}'}"
+                       Grid.Row="1"
+                       Grid.ColumnSpan="2"/>
+
+            <TextBlock Text="{Binding DateEnded, StringFormat='Date ended: {0}'}"
+                       Grid.Row="2"
+                       Grid.ColumnSpan="2"/>
+
+            <Separator Grid.Row="3"
+                       Grid.ColumnSpan="2"/>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>
